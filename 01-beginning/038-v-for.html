@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue learning</title>
+    <script src="vue.js"></script>
+    <style type="text/css">
+    body {
+        background-color: rgb(56, 54, 54);
+        color: white;
+    }
+    a {
+        color: lightblue;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div v-for="n in 10">{{ n }}</div> -->
+       <ul>
+           <li v-for="(ingredient, i) in ingredients" :key="ingredient">{{ ingredient }} ({{ i+1 }})</li>
+       </ul>
+       <button @click="ingredients.push('spices')">Add new</button>
+       <hr>
+       <ul>
+           <li v-for="person in persons">
+               <p v-for="(value, key, index) in person">({{index}}) - {{key}}: {{value}}</p>
+           </li>
+       </ul>
+       <hr>
+       <template v-for="(ingredient, i) in ingredients">
+           <h1>{{ingredient}}</h1>
+           <p>{{i}}</p>
+       </template>
+    </div>
+
+    <script>
+        new Vue ({
+            el: '#app',
+            data() {
+                return {
+                    ingredients: ['meat', 'fruit', 'cookies'],
+                    persons: [
+                        {name: 'Max', age: 27, color: 'red'},
+                        {name: 'Anna', age: 'unknown', color: 'blue'},
+                    ]
+                }
+            },
+        });
+    </script>
+</body>
+</html>

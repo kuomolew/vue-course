@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue learning</title>
+    <script src="vue.js"></script>
+    <style type="text/css">
+    body {
+        background-color: rgb(56, 54, 54);
+        color: white;
+    }
+    a {
+        color: lightblue;
+    }
+        
+    </style>
+</head>
+<body>
+    <div id="app1">
+       <h1 ref="title">{{ title }}</h1>
+       <button @click='show' ref="myButton">Show Paragraph</button>
+       <p v-if="showParagraph">This is not always visible</p>
+    </div>
+    <div id="app2">
+        <h1>{{ title }}</h1>
+        <button @click="onChange">Change Something in Vue1</button>
+    </div>
+
+    <div id="app3">
+
+    </div>
+    <script>
+        let data = function() {
+            return {
+                    title: 'The VueJS Instance',
+                    showParagraph: false
+                }   
+        }
+        let vm1 = new Vue ({
+
+            el: '#app1',
+            data: data, 
+            methods: {
+                show: function() {
+                    this.showParagraph = true;
+                    this.updateTitle('The VueJS Instance (Updated)');
+                    console.log(this.$refs);
+                    this.$refs.myButton.innerText = 'Test';
+                },
+                updateTitle: function(title) {
+                    this.title = title;
+                }
+            },
+            computed: {
+                lowercaseTitle: function() {
+                    return this.title.toLowercase();
+                }
+            },
+            watch: {
+                title: function(value) {
+                    console.log(`Title changed, new value: ${value}`);
+                }
+            }
+        });
+
+        setTimeout( () => {
+            vm1.title = 'No, it will be another title!'
+        }, 3000);
+
+        let vm2 = new Vue ({
+            el: '#app2',
+            data() {
+                return {
+                    title: "The second instance",
+                }
+            },
+            methods: {
+                onChange: function() {
+                    vm1.title = 'Changed!'
+                } 
+            }
+        });
+
+        let vm3 = new Vue({
+            template: '<h1>Hello!</h1>'
+        })
+        //console.log(vm1.$options.el);
+        vm1.$refs.title.innerText = 'Another title'; //not reactive
+
+        vm3.$mount('#app3');
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "name": "14-animations",
+  "name": "14-animation-quiz",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,16 +7,16 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
-    "jquery": "^3.4.1",
-    "popper.js": "^1.16.1",
-    "v-animate-css": "0.0.3",
     "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }

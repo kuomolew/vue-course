@@ -2,15 +2,21 @@
   <form @submit.prevent="submitForm">
     <div class="form-control">
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" />
+      <input id="user-name" name="user-name" type="text" v-model="userName" />
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
-      <input id="age" name="age" type="number" />
+      <input
+        id="age"
+        name="age"
+        type="number"
+        v-model.number="userAge"
+        ref="ageInput"
+      />
     </div>
     <div class="form-control">
       <label for="referrer">How did you hear about us?</label>
-      <select name="referrer" id="referrer">
+      <select name="referrer" id="referrer" v-model="referrer">
         <option value="google">Google</option>
         <option value="wom">World of mouth</option>
         <option value="newspaper">Newspaper</option>
@@ -19,30 +25,45 @@
     <div class="form-control">
       <h2>What are you interested in?</h2>
       <div>
-        <input id="interest-news" name="interest" type="checkbox" />
+        <input
+          id="interest-news"
+          name="interest"
+          type="checkbox"
+          v-model="interest"
+        />
         <label for="interest-news">News</label>
       </div>
       <div>
-        <input id="interest-tutorials" name="interest" type="checkbox" />
+        <input
+          id="interest-tutorials"
+          name="interest"
+          type="checkbox"
+          v-model="interest"
+        />
         <label for="interest-tutorials">Tutorials</label>
       </div>
       <div>
-        <input id="interest-nothing" name="interest" type="checkbox" />
+        <input
+          id="interest-nothing"
+          name="interest"
+          type="checkbox"
+          v-model="interest"
+        />
         <label for="interest-nothing">Nothing</label>
       </div>
     </div>
     <div class="form-control">
       <h2>WHow do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" />
+        <input id="how-video" name="how" type="radio" v-model="how" />
         <label for="how-video">Video</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" type="radio" />
+        <input id="how-blogs" name="how" type="radio" v-model="how" />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" />
+        <input id="how-other" name="how" type="radio" v-model="how" />
         <label for="how-other">Other</label>
       </div>
     </div>
@@ -55,13 +76,35 @@
 <script>
 export default {
   name: "TheForm",
+  data() {
+    return {
+      userName: "",
+      userAge: null,
+      referrer: "wom",
+      interest: null,
+      how: null,
+    };
+  },
   methods: {
-    submitForm() {},
+    submitForm() {
+      console.log("Username", this.userName);
+      this.userName = "";
+      console.log("User age:");
+      console.log(this.userAge + 5);
+      console.log(this.$refs.ageInput.value + 5);
+      console.log(31);
+      this.userAge = null;
+      console.log(`Referrer: ${this.referrer}`);
+      this.referrer = "wom";
+      console.log(`Checkboxes: ${this.interest}`);
+      this.interest = null;
+      console.log(`Radio buttons: ${this.how}`);
+      this.how = null;
+    },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 form {
   margin: 2rem auto;

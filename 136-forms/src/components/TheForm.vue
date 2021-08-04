@@ -1,8 +1,18 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameValidity === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" v-model="userName" />
+      <input
+        id="user-name"
+        name="user-name"
+        type="text"
+        v-model.trim="userName"
+        @blur="validateInput"
+      />
+      <p v-if="userNameValidity === 'invalid'">Please enter a valid name!</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
@@ -28,6 +38,7 @@
         <input
           id="interest-news"
           name="interest"
+          value="news"
           type="checkbox"
           v-model="interest"
         />
@@ -37,6 +48,7 @@
         <input
           id="interest-tutorials"
           name="interest"
+          value="tutorials"
           type="checkbox"
           v-model="interest"
         />
@@ -46,6 +58,7 @@
         <input
           id="interest-nothing"
           name="interest"
+          value="nothing"
           type="checkbox"
           v-model="interest"
         />
@@ -53,19 +66,46 @@
       </div>
     </div>
     <div class="form-control">
-      <h2>WHow do you learn?</h2>
+      <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" v-model="how" />
+        <input
+          id="how-video"
+          name="how"
+          value="video"
+          type="radio"
+          v-model="how"
+        />
         <label for="how-video">Video</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" type="radio" v-model="how" />
+        <input
+          id="how-blogs"
+          name="how"
+          value="blogs"
+          type="radio"
+          v-model="how"
+        />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" v-model="how" />
+        <input
+          id="how-other"
+          name="how"
+          value="other"
+          type="radio"
+          v-model="how"
+        />
         <label for="how-other">Other</label>
       </div>
+    </div>
+    <div class="form-control">
+      <input
+        type="checkbox"
+        name="confirm-terms"
+        id="confirm-terms"
+        v-model="confirm"
+      />
+      <label for="confirm-terms">Agree to terms of use?</label>
     </div>
     <div>
       <button>Save Data</button>
@@ -81,25 +121,44 @@ export default {
       userName: "",
       userAge: null,
       referrer: "wom",
-      interest: null,
+      interest: [],
       how: null,
+      confirm: false,
+      userNameValidity: "pending",
     };
   },
   methods: {
     submitForm() {
       console.log("Username", this.userName);
       this.userName = "";
+
       console.log("User age:");
       console.log(this.userAge + 5);
       console.log(this.$refs.ageInput.value + 5);
       console.log(31);
       this.userAge = null;
+
       console.log(`Referrer: ${this.referrer}`);
       this.referrer = "wom";
-      console.log(`Checkboxes: ${this.interest}`);
-      this.interest = null;
-      console.log(`Radio buttons: ${this.how}`);
+
+      console.log(`Checkboxes:`);
+      console.log(this.interest);
+      this.interest = [];
+
+      console.log(`Radio buttons:`);
+      console.log(this.how);
       this.how = null;
+
+      console.log("Confirm:");
+      console.log(this.confirm);
+      this.confirm = false;
+    },
+    validateInput() {
+      if (this.userName === "") {
+        this.userNameValidity = "invalid";
+      } else {
+        this.userNameValidity = "valid";
+      }
     },
   },
 };
@@ -117,6 +176,14 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label {
+  color: red;
 }
 
 label {

@@ -32,7 +32,7 @@ export default {
     loadTeamMembers(teamId) {
       // console.log('route', route);
       // this.$route.path;
-      console.log(teamId);
+      // console.log(teamId);
       const selectedTeam = this.teams.find((team) => team.id === teamId);
       const members = selectedTeam.members;
       const selectedMembers = [];
@@ -46,9 +46,11 @@ export default {
   },
   created() {
     this.loadTeamMembers(this.teamId);
+    // console.log(this.$route.query);
   },
   watch: {
     teamId(newId) {
+      console.log(newId);
       this.loadTeamMembers(newId);
     },
   },
